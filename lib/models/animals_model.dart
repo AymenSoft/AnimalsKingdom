@@ -11,7 +11,7 @@ class AnimalsModel{
 
 }
 
-List animals = [
+List animalsModel = [
   AnimalsModel(
       name: "Panther",
       picture: "assets/images/Panther.png",
