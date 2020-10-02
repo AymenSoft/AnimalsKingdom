@@ -11,32 +11,38 @@ class AnimalWidget extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AnimalDetails(animal: animalsModel[0])),
-        );
+        Navigator.push(context, PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 1200),
+            pageBuilder: (context, _, __) => AnimalDetails(animal: animalsModel[0])
+        ));
       },
       child: Stack(children: <Widget>[
         Align(
           alignment: Alignment.bottomCenter,
           child: ClipPath(
             clipper: BackgroundClipper(),
-            child: Container(
-              width: 0.9 * screenWidth,
-              height: 0.6 * screenHeight,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: animalsModel[0].colors,
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft)),
+            child: Hero(
+              tag: 'background-${animalsModel[0].name}',
+              child: Container(
+                width: 0.9 * screenWidth,
+                height: 0.6 * screenHeight,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: animalsModel[0].colors,
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft)),
+              ),
             ),
           ),
         ),
         Align(
           alignment: Alignment(0, -0.5),
-          child: Image.asset(
-            animalsModel[0].picture,
-            height: screenHeight * 0.55,
+          child: Hero(
+            tag: 'image-${animalsModel[0].picture}',
+            child: Image.asset(
+              animalsModel[0].picture,
+              height: screenHeight * 0.55,
+            ),
           ),
         ),
         Padding(
@@ -45,8 +51,20 @@ class AnimalWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Text(animalsModel[0].name, style: AppTheme.heading),
-              Text('Tap to read more', style: AppTheme.subHeading)
+              Hero(
+                  tag: 'name-${animalsModel[0].name}',
+                  child: Material(
+                      color: Colors.transparent,
+                      child: Container(
+                          child: Text(animalsModel[0].name,
+                              style: AppTheme.heading)))),
+              Hero(
+                  tag: 'description-${animalsModel[0].description}',
+                  child: Material(
+                      color: Colors.transparent,
+                      child: Container(
+                          child: Text('Tap to read more',
+                              style: AppTheme.subHeading))))
             ],
           ),
         )
