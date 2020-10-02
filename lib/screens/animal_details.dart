@@ -1,3 +1,4 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:animals_app/models/animals_model.dart';
 import 'package:animals_app/values/styles.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +19,9 @@ class AnimalDetails extends StatefulWidget {
   }
 }
 
-class _AnimalDetailsScreenState extends State<AnimalDetails> {
+class _AnimalDetailsScreenState extends State<AnimalDetails> with AfterLayoutMixin<AnimalDetails>  {
 
-  double _currentButtomSheet = -250;
+  double _currentButtomSheet = -330;
   bool isCollapsed = false;
 
   @override
