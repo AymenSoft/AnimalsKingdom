@@ -1,3 +1,4 @@
+import 'package:animals_app/models/animals_model.dart';
 import 'package:animals_app/values/styles.dart';
 import 'package:animals_app/widgets/animal_widget.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,21 @@ class AnimalsList extends StatefulWidget {
 }
 
 class _AnimalsListState extends State<AnimalsList> {
+
+  PageController _pageController;
+  int currentPage = 0;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(
+      viewportFraction: 1.0,
+      initialPage: currentPage,
+      keepPage: false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +53,14 @@ class _AnimalsListState extends State<AnimalsList> {
               ),
             ),
             Expanded(
-              child: AnimalWidget(),
+              child: PageView(
+                physics: ClampingScrollPhysics(),
+                controller: _pageController,
+                children: <Widget>[
+                  for (var i = 0; i < animalsModel.length; i++)
+                    AnimalWidget(animalsModel[i], _pageController, i)
+                ],
+              ),
             )
           ],
         ),
